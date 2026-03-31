@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aqbobek Kiosk — Hall Display</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #040d18;
+      --surface: rgba(255,255,255,0.04);
+      --border: rgba(255,255,255,0.08);
+      --text: #f0f6ff;
+      --muted: #6b82a0;
+      --green: #00e5a0;
+      --yellow: #ffc84a;
+      --blue: #4a9eff;
+      --purple: #9b6eff;
+      --font-d: 'Syne', sans-serif;
+      --font-b: 'DM Sans', sans-serif;
+      --font-m: 'JetBrains Mono', monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-b);
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 32px;
+      overflow-x: hidden;
+    }
+
+    #bg-canvas {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.5;
+    }
+
+    .wrap { position: relative; z-index: 1; }
+
+    .kiosk-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 28px;
+    }
+
+    .kiosk-header .eyebrow {
+      font-size: 0.7rem;
+      color: var(--blue);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      margin-bottom: 6px;
+    }
+
+    .kiosk-header h1 {
+      font-family: var(--font-d);
+      font-size: clamp(2rem, 3vw, 3rem);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      border-radius: 99px;
+      border: 1px solid rgba(0,229,160,0.2);
+      background: rgba(0,229,160,0.06);
+      color: var(--green);
+      font-size: 0.78rem;
+      font-weight: 500;
+    }
+
+    .pulse {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 0 0 rgba(0,229,160,0.4);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(0,229,160,.4); }
+      70% { box-shadow: 0 0 0 8px rgba(0,229,160,0); }
+      100% { box-shadow: 0 0 0 0 rgba(0,229,160,0); }
+    }
+
+    .kiosk-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .kiosk-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 28px;
+      backdrop-filter: blur(16px);
+    }
+
+    .kiosk-card h2 {
+      font-family: var(--font-d);
+      font-size: 1.3rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 20px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .kiosk-rows, .kiosk-news-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .kiosk-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      padding: 14px 18px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+    }
+
+    .kiosk-row-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .rank {
+      font-family: var(--font-m);
+      font-size: 0.8rem;
+      color: var(--muted);
+      min-width: 24px;
+    }
+
+    .rank-1 { color: #ffd700; }
+    .rank-2 { color: #c0c0c0; }
+    .rank-3 { color: #cd7f32; }
+
+    .kiosk-row strong {
+      font-size: 1.05rem;
+      font-weight: 500;
+    }
+
+    .kiosk-row .score {
+      font-family: var(--font-m);
+      font-size: 0.9rem;
+      color: var(--green);
+      background: rgba(0,229,160,0.08);
+      border: 1px solid rgba(0,229,160,0.16);
+      padding: 4px 10px;
+      border-radius: 99px;
+    }
+
+    .kiosk-news {
+      padding: 14px 16px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+    }
+
+    .kiosk-news strong {
+      display: block;
+      font-size: 0.95rem;
+      font-weight: 500;
+      margin-bottom: 6px;
+      font-family: var(--font-d);
+    }
+
+    .kiosk-news p {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.6;
+      font-weight: 300;
+    }
+
+    .kiosk-empty {
+      color: var(--muted);
+      font-size: 0.88rem;
+      font-weight: 300;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .kiosk-ann-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .kiosk-ann-post { border-left: 3px solid var(--blue); }
+    .kiosk-ann-notif { border-left: 3px solid var(--yellow); }
+
+    @media (max-width: 1100px) {
+      .kiosk-grid { grid-template-columns: 1fr 1fr; }
+      .kiosk-ann-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 700px) {
+      .kiosk-grid { grid-template-columns: 1fr; }
+      body { padding: 18px; }
+      .kiosk-ann-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<canvas id="bg-canvas"></canvas>
+<div class="wrap">
+  <header class="kiosk-header">
+    <div>
+      <p class="eyebrow">Aqbobek Lyceum · Hall Display</p>
+      <h1>Интерактивная стенгазета</h1>
+    </div>
+    <div class="status-pill">
+      <span class="pulse"></span>
+      Kiosk mode active
+    </div>
+  </header>
+  <div id="kioskFeed" class="kiosk-grid"></div>
+</div>
+
+<script>
+  (function() {
+    const canvas = document.getElementById('bg-canvas');
+    const ctx = canvas.getContext('2d');
+    let W, H, nodes = [];
+    function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+    function init() { nodes = Array.from({length: 50}, () => ({ x: Math.random()*W, y: Math.random()*H, vx: (Math.random()-.5)*.25, vy: (Math.random()-.5)*.25, r: Math.random()*1.5+.5 })); }
+    function draw() {
+      ctx.clearRect(0,0,W,H);
+      for (let i=0;i<nodes.length;i++) {
+        const n=nodes[i]; n.x+=n.vx; n.y+=n.vy;
+        if(n.x<0||n.x>W) n.vx*=-1; if(n.y<0||n.y>H) n.vy*=-1;
+        for (let j=i+1;j<nodes.length;j++) {
+          const m=nodes[j], dx=n.x-m.x, dy=n.y-m.y, d=Math.sqrt(dx*dx+dy*dy);
+          if(d<130) { ctx.beginPath(); ctx.moveTo(n.x,n.y); ctx.lineTo(m.x,m.y); ctx.strokeStyle=`rgba(74,158,255,${.05*(1-d/130)})`; ctx.lineWidth=.7; ctx.stroke(); }
+        }
+        ctx.beginPath(); ctx.arc(n.x,n.y,n.r,0,Math.PI*2); ctx.fillStyle='rgba(74,158,255,0.2)'; ctx.fill();
+      }
+      requestAnimationFrame(draw);
+    }
+    resize(); init(); draw();
+    window.addEventListener('resize', ()=>{ resize(); init(); });
+  })();
+
+  const API = 'http://127.0.0.1:8000';
+  let AUTH_TOKEN = '';
+
+  async function ensureToken() {
+    if (AUTH_TOKEN) return AUTH_TOKEN;
+    const res = await fetch(`${API}/api/auth/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ user_id: 7, password: 'demo123' })
+    });
+    if (!res.ok) throw new Error('Kiosk auth failed');
+    const data = await res.json();
+    AUTH_TOKEN = data.token || '';
+    return AUTH_TOKEN;
+  }
+
+  async function renderKiosk() {
+    try {
+      const token = await ensureToken();
+      const res = await fetch(`${API}/api/kiosk-feed`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      const data = await res.json();
+
+      const topHtml = (data.top_students||[]).map((s,i) => `
+        <div class="kiosk-row">
+          <div class="kiosk-row-left">
+            <span class="rank rank-${i+1}">#${i+1}</span>
+            <strong>${s.name}</strong>
+          </div>
+          <span class="score">${s.score}</span>
+        </div>`).join('') || `<p class="kiosk-empty">Данные недоступны.</p>`;
+
+      // Unified Объявления: merge posts + schedule notifications, newest first
+      const allAnn = [
+        ...(data.announcements||[]).map(a=>({ icon:'📣', title: a.title, body: a.body, type:'post' })),
+        ...(data.schedule_updates||[]).map(n=>({ icon:'📢', title:'Замена в расписании', body: n.message, type:'notif' })),
+      ];
+
+      const annHtml = allAnn.length
+        ? allAnn.map(a=>`
+          <div class="kiosk-news kiosk-ann-${a.type}">
+            <strong>${a.icon} ${a.title}</strong>
+            <p>${a.body}</p>
+          </div>`).join('')
+        : `<div class="kiosk-news"><strong>✅ Без новостей</strong><p>Новых объявлений и замен нет.</p></div>`;
+
+      document.getElementById('kioskFeed').innerHTML = `
+        <section class="kiosk-card">
+          <h2>🏆 Топ ученики</h2>
+          <div class="kiosk-rows">${topHtml}</div>
+        </section>
+        <section class="kiosk-card" style="grid-column: span 2">
+          <h2>📣 Объявления</h2>
+          <div class="kiosk-news-list kiosk-ann-grid">${annHtml}</div>
+        </section>`;
+    } catch(e) {
+      document.getElementById('kioskFeed').innerHTML = `
+        <section class="kiosk-card" style="grid-column:1/-1">
+          <h2>Система загружается</h2>
+          <p class="kiosk-empty">Нет подключения к backend. Убедись, что сервер запущен на порту 8000.</p>
+        </section>`;
+    }
+  }
+
+  renderKiosk();
+  setInterval(renderKiosk, 15000);
+  setInterval(() => window.scrollBy({ top: 320, behavior: 'smooth' }), 6000);
+</script>
+</body>
+</html>

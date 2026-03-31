@@ -1,0 +1,248 @@
+﻿<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Aqbobek Lyceum — Pitch Deck</title>
+<style>
+  @page { size: A4 landscape; margin: 0; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #050b17;
+    color: #eaf2ff;
+  }
+  .slide {
+    width: 297mm;
+    height: 210mm;
+    padding: 16mm 18mm;
+    position: relative;
+    overflow: hidden;
+    page-break-after: always;
+    background:
+      radial-gradient(1200px 400px at 100% -10%, rgba(0, 228, 255, .20), transparent 60%),
+      radial-gradient(900px 360px at -10% 110%, rgba(68, 255, 186, .18), transparent 60%),
+      linear-gradient(160deg, #071427 0%, #060d1c 55%, #050914 100%);
+  }
+  .grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(130,170,255,.08) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(130,170,255,.08) 1px, transparent 1px);
+    background-size: 28px 28px;
+    mask-image: radial-gradient(circle at center, black 55%, transparent 100%);
+    pointer-events: none;
+  }
+  .tag {
+    display: inline-block;
+    padding: 6px 12px;
+    border: 1px solid rgba(130,170,255,.45);
+    border-radius: 999px;
+    color: #9dc4ff;
+    font-size: 14px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    background: rgba(20,39,78,.35);
+    backdrop-filter: blur(2px);
+  }
+  h1 {
+    font-size: 52px;
+    line-height: 1.05;
+    margin: 10px 0 16px;
+    letter-spacing: .01em;
+  }
+  h2 {
+    font-size: 38px;
+    margin: 8px 0 14px;
+    line-height: 1.1;
+  }
+  p, li {
+    font-size: 24px;
+    line-height: 1.4;
+    color: #d7e6ff;
+  }
+  .accent { color: #64f4d8; }
+  .muted { color: #97acd3; }
+  .kpi-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-top: 20px;
+  }
+  .kpi {
+    border: 1px solid rgba(133,165,255,.28);
+    border-radius: 14px;
+    padding: 12px;
+    background: rgba(8,20,42,.55);
+  }
+  .kpi b { font-size: 34px; color: #72c9ff; display:block; }
+  .cols {
+    display: grid;
+    grid-template-columns: 1.1fr .9fr;
+    gap: 20px;
+    align-items: start;
+  }
+  .card {
+    border: 1px solid rgba(133,165,255,.28);
+    border-radius: 16px;
+    padding: 14px 16px;
+    background: rgba(8,20,42,.48);
+    margin-bottom: 12px;
+  }
+  ul { margin: 6px 0 0 24px; }
+  .footer {
+    position: absolute;
+    right: 18mm;
+    bottom: 10mm;
+    font-size: 16px;
+    color: #8ea8d6;
+  }
+  .timeline {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    margin-top: 14px;
+  }
+  .step {
+    border: 1px solid rgba(133,165,255,.28);
+    border-radius: 12px;
+    padding: 10px;
+    background: rgba(11,26,54,.55);
+    min-height: 120px;
+  }
+  .step h4 { margin: 0 0 8px; color:#7fd4ff; font-size: 18px; }
+  .step p { margin:0; font-size:16px; line-height:1.35; }
+</style>
+</head>
+<body>
+  <section class="slide">
+    <div class="grid"></div>
+    <div class="tag">Aqbobek Lyceum • Unified Portal</div>
+    <h1>Единый школьный портал<br><span class="accent">Aqbobek Lyceum</span></h1>
+    <p>Команда: Aqbobek Tech Team</p>
+    <p class="muted">Кейс: цифровая экосистема школы с AI-аналитикой и Smart Schedule</p>
+    <div class="kpi-row">
+      <div class="kpi"><b>4</b>Роли в системе</div>
+      <div class="kpi"><b>AI</b>Предиктивная аналитика</div>
+      <div class="kpi"><b>24/7</b>Kiosk-режим</div>
+      <div class="kpi"><b>Mock API</b>BilimClass интеграция</div>
+    </div>
+    <div class="footer">Слайд 1 / 7</div>
+  </section>
+
+  <section class="slide">
+    <div class="grid"></div>
+    <div class="tag">Проблема</div>
+    <h2>Данные школы разрознены и процессы дорогие по времени</h2>
+    <div class="cols">
+      <div class="card">
+        <ul>
+          <li>Оценки, посещаемость и достижения хранятся в разных местах.</li>
+          <li>Учителю и администрации сложно быстро видеть риски по ученикам.</li>
+          <li>Расписание составляется вручную, конфликтует по кабинетам и учителям.</li>
+          <li>Нет единого канала уведомлений для учеников, родителей и педагогов.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <p><b>Цена проблемы:</b></p>
+        <ul>
+          <li>Потери времени администрации</li>
+          <li>Поздняя реакция на падение успеваемости</li>
+          <li>Снижение прозрачности для родителей</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer">Слайд 2 / 7</div>
+  </section>
+
+  <section class="slide">
+    <div class="grid"></div>
+    <div class="tag">Решение</div>
+    <h2>Один портал для 4 ролей + AI + автоматизация расписания</h2>
+    <div class="cols">
+      <div>
+        <div class="card"><p><b>Ученик:</b> дашборд оценок, AI-тьютор, портфолио, геймификация.</p></div>
+        <div class="card"><p><b>Учитель:</b> Early Warning, AI-отчёт за 1 клик, контакты родителей.</p></div>
+        <div class="card"><p><b>Родитель:</b> режим наблюдателя, weekly AI summary, обратная связь.</p></div>
+        <div class="card"><p><b>Админ:</b> School Radar, центр уведомлений, Smart Schedule.</p></div>
+      </div>
+      <div class="card">
+        <p><b>Ключевой эффект:</b></p>
+        <ul>
+          <li>Единая точка принятия решений</li>
+          <li>Проактивная работа с рисками</li>
+          <li>Сокращение ручной рутины</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer">Слайд 3 / 7</div>
+  </section>
+
+  <section class="slide">
+    <div class="grid"></div>
+    <div class="tag">Технологии</div>
+    <h2>Стек и инженерная архитектура</h2>
+    <div class="cols">
+      <div>
+        <div class="card"><p><b>Frontend:</b> HTML/CSS/JS SPA, role-based UI, kiosk.html для панелей.</p></div>
+        <div class="card"><p><b>Backend:</b> FastAPI, Mock BilimClass API, RBAC, WebSocket уведомления.</p></div>
+        <div class="card"><p><b>AI:</b> LLM через API + собственный risk scoring алгоритм.</p></div>
+      </div>
+      <div>
+        <div class="card"><p><b>Алгоритмы:</b> генерация расписания с учётом constraints и автозамены при болезни учителя.</p></div>
+        <div class="card"><p><b>Безопасность:</b> токены, ролевые проверки, базовая защита бизнес-логики.</p></div>
+      </div>
+    </div>
+    <div class="footer">Слайд 4 / 7</div>
+  </section>
+
+  <section class="slide">
+    <div class="grid"></div>
+    <div class="tag">Демонстрация</div>
+    <h2>Что показываем на демо</h2>
+    <div class="card">
+      <ul>
+        <li>Вход по ролям: ученик, учитель, родитель, администратор.</li>
+        <li>AI риск-анализ и рекомендации по каждому ученику.</li>
+        <li>Кнопка «Учитель заболел» и мгновенная перестройка расписания.</li>
+        <li>Kiosk Mode: автопрокрутка, крупная типографика, замены и топ дня.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <p><b>Вставьте сюда 3–4 скриншота:</b> главная, админ-радар, учительская аналитика, kiosk.</p>
+    </div>
+    <div class="footer">Слайд 5 / 7</div>
+  </section>
+
+  <section class="slide">
+    <div class="grid"></div>
+    <div class="tag">Будущее проекта</div>
+    <h2>Масштабирование на следующий этап</h2>
+    <div class="timeline">
+      <div class="step"><h4>v1.1</h4><p>Мобильное приложение для родителей и push-уведомления.</p></div>
+      <div class="step"><h4>v1.2</h4><p>Интеграция с реальным BilimClass API и гос. сервисами.</p></div>
+      <div class="step"><h4>v1.3</h4><p>Продвинутый оптимизатор расписания (генетический/CP-SAT).</p></div>
+      <div class="step"><h4>v1.4</h4><p>AI ассистент классного руководителя и автоплан развития.</p></div>
+      <div class="step"><h4>v2.0</h4><p>Подключение нескольких школ в единую образовательную сеть.</p></div>
+    </div>
+    <div class="footer">Слайд 6 / 7</div>
+  </section>
+
+  <section class="slide">
+    <div class="grid"></div>
+    <div class="tag">Финал</div>
+    <h1>Почему это решение победит</h1>
+    <ul>
+      <li>Закрывает все обязательные роли и MVP-требования.</li>
+      <li>Показывает реальную AI-ценность, а не только чат.</li>
+      <li>Решает сложный модуль расписания и динамических замен.</li>
+      <li>Готово к масштабированию и демонстрирует бизнес-эффект.</li>
+    </ul>
+    <p class="accent" style="margin-top:20px; font-size:30px;">Aqbobek Lyceum: One Portal. Smart Decisions.</p>
+    <div class="footer">Слайд 7 / 7</div>
+  </section>
+</body>
+</html>
